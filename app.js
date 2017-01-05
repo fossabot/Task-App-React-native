@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet,Text, View,Navigator} from 'react-native';
+import {StyleSheet,Text, View,Navigator,} from 'react-native';
 import Dashboard from './components/Dashboard'
 import CreateTask from './components/CreateTask'
 import Home from './components/Home' 
@@ -24,6 +24,7 @@ import Login from './components/Login'
       return <Home navigator={navigator} style={style}/>
     }
   }
+
 
   render() {
     return (

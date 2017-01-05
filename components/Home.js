@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { View, Text,Button,Alert,StyleSheet} from 'react-native';
+import { View, Text,Button,Alert,StyleSheet,BackAndroid} from 'react-native';
 
 const style = StyleSheet.create({
     buttonList:{
@@ -16,8 +16,16 @@ export default class Home extends Component {
         })
 
     }
-
-
+      componentDidMount(){
+ BackAndroid.addEventListener("hardwareBackPress", () => {
+  if (this.props.navigator.getCurrentRoutes().length > 1) {
+   this.props.navigator.pop();
+    return true // do not exit app
+  } else {
+    return false // exit app
+  }
+})
+  }
   render () { return ( 
      <View style={this.props.style.container}> 
      <Text style={this.props.style.textStyle}>Home</Text> 

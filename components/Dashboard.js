@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { View, Text,Button,Alert} from 'react-native';
+import { View, Text,Button,Alert,} from 'react-native';
 
 export default class Dashboard extends Component {
 
@@ -15,6 +15,7 @@ export default class Dashboard extends Component {
     })
     
   }
+
   render () { 
        if(!this.state){
        return (

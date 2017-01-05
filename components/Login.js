@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, Button,StyleSheet,TouchableOpacity, Switch } from 'react-native'
-import AccountKit, {LoginButton, Color,StatusBarStyle,} from 'react-native-facebook-account-kit'
+import AccountKit, {LoginButton, Color,StatusBarStyle,BackAndroid,} from 'react-native-facebook-account-kit'
 
 export default class Login extends Component {
    state = {
@@ -90,6 +90,7 @@ export default class Login extends Component {
   buttonHandle () {
     this.props.navigator.pop()
   }
+
   render () {
     return ( <View style={styles.container}>
         { this.state.loggedAccount ? this.renderUserLogged() : this.renderLogin() }
