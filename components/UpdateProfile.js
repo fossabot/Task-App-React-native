@@ -3,7 +3,9 @@ import {Text, View,Button,TextInput} from 'react-native'
 
 export default class UpdateProfile extends Component {
     componentWillMount(){
-        fetch('http://35.154.42.175:3000/appuserdata/140699849744149').then((reply)=>{
+        fetch('http://35.154.42.175:3000/appuserdata/140699849744149')
+        .then((response)=> response.json())
+        .then((reply)=>{
       this.setState({
         data: JSON.stringify(reply)
       })

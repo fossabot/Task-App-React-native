@@ -28,7 +28,7 @@ export default class Home extends Component {
   }
   render () { return ( 
      <View style={this.props.style.container}> 
-     <Text style={this.props.style.textStyle}>Home</Text> 
+     <Text style={this.props.style.textStyle}>Main</Text> 
      <View style={style.buttonList}>
          <Button onPress={this.buttonHandle.bind(this, 'login')} title="Login"/> 
     <Button onPress={this.buttonHandle.bind(this, 'dashboard')} title="Dashboard"/> 

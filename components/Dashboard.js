@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { View, Text,Button,Alert,} from 'react-native';
+import { View, Text,Button,Alert,ListView,ScrollView} from 'react-native';
 
 export default class Dashboard extends Component {
 
@@ -8,15 +8,19 @@ export default class Dashboard extends Component {
 
   }
   componentWillMount(){
-    fetch('http://35.154.42.175:3000/appdashboard/140699849744149').then((reply)=>{
+    fetch('http://35.154.42.175:3000/appdashboard/140699849744149')
+    .then((response) => response.json())
+    .then((reply)=>{
       this.setState({
-        data:JSON.stringify(reply)
+        taskby:reply.taskby,
+        taskto:reply.taskto,
+        userlist:reply.userlist
       })
     })
     
   }
-
   render () { 
+    const that = this
        if(!this.state){
        return (
          <View style={this.props.style.container}> 
@@ -25,9 +29,18 @@ export default class Dashboard extends Component {
        }
         return ( 
      <View style={this.props.style.container}> 
-     <Text >Dashboard</Text> 
-     <Button onPress={this.buttonHandle.bind(this)} title="Back" style={this.props.style.button}/>
-     <Text>{this.state.data}</Text>
+<ScrollView>
+{
+  this.state.taskby.map(function(data){
+    return (<Text key={data.id}>{data.title +"  Task Assigned By  "+that.state.userlist[data.taskby]}</Text>)
+  })
+}
+{
+  this.state.taskto.map(function(data){
+    return (<Text key={data.id}>{data.title+"  Task Assigned By "+that.state.userlist[data.taskby]}</Text>)
+  })
+}
+</ScrollView>
      </View>
      ) 
 }

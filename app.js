@@ -27,6 +27,7 @@ import Login from './components/Login'
 
 
   render() {
+    console.log("Hello World")
     return (
         <Navigator initialRoute={{ name: 'home'}} renderScene={this.renderComponent.bind(this)} />
     );
