@@ -1,5 +1,6 @@
 import React, { Component} from 'react';
 import { View, Text,Button,Alert,ListView,ScrollView} from 'react-native';
+import TaskPanel from './TaskPanel'
 
 export default class Dashboard extends Component {
 
@@ -9,7 +10,7 @@ export default class Dashboard extends Component {
   }
   componentWillMount(){
     fetch('http://35.154.42.175:3000/appdashboard/140699849744149')
-    .then((response) => response.json())
+    .then(response => response.json())
     .then((reply)=>{
       this.setState({
         taskby:reply.taskby,
@@ -32,12 +33,12 @@ export default class Dashboard extends Component {
 <ScrollView>
 {
   this.state.taskby.map(function(data){
-    return (<Text key={data.id}>{data.title +"  Task Assigned By  "+that.state.userlist[data.taskby]}</Text>)
+    return (<TaskPanel key={data.id} id={data.id} title={data.title} userlist={that.state.userlist} taskby={data.taskby} />)
   })
 }
 {
   this.state.taskto.map(function(data){
-    return (<Text key={data.id}>{data.title+"  Task Assigned By "+that.state.userlist[data.taskby]}</Text>)
+    return (<TaskPanel key={data.id} id={data.id} title={data.title} userlist={that.state.userlist} taskby={data.taskby} />)
   })
 }
 </ScrollView>
