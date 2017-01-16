@@ -12,7 +12,10 @@ const style = StyleSheet.create({
 export default class Home extends Component {
     buttonHandle(e){
         this.props.navigator.push({
-            name:e
+            name:e,
+            passProps: {
+            id: 140699849744149
+    }
         })
 
     }
@@ -34,6 +37,8 @@ export default class Home extends Component {
     <Button onPress={this.buttonHandle.bind(this, 'dashboard')} title="Dashboard"/> 
     <Button onPress={this.buttonHandle.bind(this, 'updateprofile')} title="Update Profile"/> 
     <Button onPress={this.buttonHandle.bind(this, 'createtask')} title="Create Task"/> 
+    <Button onPress={this.buttonHandle.bind(this, 'main')} title="Main"/> 
+
         </View>
      </View>
      ) }

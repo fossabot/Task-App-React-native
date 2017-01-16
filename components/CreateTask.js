@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { TouchableWithoutFeedback, Text, DatePickerAndroid, View, Button, TextInput, StyleSheet, Picker, Alert, ToolbarAndroid } from 'react-native'
+import { TouchableWithoutFeedback, DatePickerAndroid, View, TextInput, StyleSheet, Picker, Alert, ToolbarAndroid } from 'react-native'
+import { Container, Header, Title, Content, Text ,Button,Input,InputGroup,List, ListItem} from 'native-base'
 
 export default class CreateTask extends Component {
   componentWillMount () {
@@ -73,19 +74,27 @@ export default class CreateTask extends Component {
   }
   render () {
       if (!this.state) {
-      return (<View style={style.scene}>
-       <ToolbarAndroid style={style.toolbar} title='Create Task' />
-        <View style={style.container}>
-               <Text>Patience You Must Have My Young Padawan</Text>
-               </View>
-      </View>)
+      return (<Container>
+      <Header><Title>Create Task</Title>
+      </Header>
+      <Content>
+      <Text>Patience You Must Have My Young Padawan</Text>
+      </Content>
+      </Container>
+      )
     }
     let tasktoArray = [{value:0,label:"Assigned To"}]
     this.state.data.forEach(val => tasktoArray.push({value:val.id,label:val.fname+" "+val.lname}))
     return (  
-      <View style={style.scene}>
-        <ToolbarAndroid style={style.toolbar} title='Create Task' />
-        <View style={style.container}>
+     <Container>
+        <Header>
+        <Title>
+        Create Task
+        </Title>
+        </Header>
+       <Content style={{padding:5}}>
+       <List>
+       <ListItem>
           <Picker selectedValue={this.state.taskto} onValueChange={(x) => this.setState({taskto: x})}>
             {tasktoArray.map(function (val) {
                  return (
@@ -93,8 +102,23 @@ export default class CreateTask extends Component {
                   )
               })}
           </Picker>
-          <TextInput style={style.elements} onChangeText={(text) => this.setState({taskname: text})} />
-          <TextInput style={style.elements} multiline={true} onChangeText={(text) => this.setState({taskdetails: text})} />
+          </ListItem>
+          <ListItem>
+            <InputGroup>
+            <Input placeholder="Task Name" onChangeText={(text) => this.setState({taskname: text})}/>
+            </InputGroup>
+          </ListItem>
+          <ListItem>
+           <TextInput
+           placeholder="Task Details"
+           style={{ fontSize: 15}}
+              multiline = {true}
+         numberOfLines = {5}
+        editable = {true}
+        maxLength = {400}
+       onChangeText={(text) => this.setState({taskdetails: text})} />
+          </ListItem>
+          </List>
           <TouchableWithoutFeedback onPress={this.dateChange.bind(this)}>
             <View style={{alignItems: 'center'}}>
               <Text style={style.datepicker}>
@@ -102,30 +126,18 @@ export default class CreateTask extends Component {
               </Text>
             </View>
           </TouchableWithoutFeedback>
-          <Button style={style.elements} onPress={this.submitButton.bind(this)} title='Submit' />
-        </View>
-      </View>)
+          <Button info block onPress={this.submitButton.bind(this)}> Submit </Button>
+   </Content>
+</Container>)
   }
 }
 const style = StyleSheet.create({
-  scene: {
-    flex: 1
-  },
-  container: {
-    padding: 10,
-    justifyContent: 'space-around'
-  },
-  toolbar: {
-    backgroundColor: '#e9eaed',
-  height: 56 },
+
   elements: {
-    fontSize: 20,
-    marginBottom: 15,
-    height: 50
+    fontSize: 15,
   },
   datepicker: {
-    fontSize: 25,
-    marginBottom: 15,
+    fontSize: 18,
     height: 50
   }
 })

@@ -5,11 +5,16 @@ import CreateTask from './components/CreateTask'
 import Home from './components/Home' 
 import UpdateProfile from './components/UpdateProfile'
 import Login from './components/Login'
+import Main from './components/Main'
+
 
  export default class app extends Component {
      renderComponent (route, navigator) {
     if (route.name === 'dashboard') {
-      return <Dashboard navigator={navigator} style={style}/>
+      return <Dashboard navigator={navigator} {...route.passProps}/>
+    }
+     if (route.name === 'main') {
+      return <Main navigator={navigator}/>
     }
      if (route.name === 'updateprofile') {
       return <UpdateProfile navigator={navigator} style={style}/>
@@ -27,7 +32,6 @@ import Login from './components/Login'
 
 
   render() {
-    console.log("Hello World")
     return (
         <Navigator initialRoute={{ name: 'home'}} renderScene={this.renderComponent.bind(this)} />
     );

@@ -7,24 +7,6 @@ export default class Login extends Component {
     authToken: null,
     loggedAccount: null
   }
-  componentWillMount() {
-    this.configureAccountKit()
-    AccountKit.getCurrentAccessToken()
-      .then((token) => {
-        if (token) {
-          AccountKit.getCurrentAccount()
-            .then((account) => {
-              this.setState({
-                authToken: token,
-                loggedAccount: account
-              })
-            })
-        } else {
-          console.log('No user account logged')
-        }
-      })
-      .catch((e) => console.log('Failed to get current access token', e))
-  }
 
   configureAccountKit() {
     AccountKit.configure({

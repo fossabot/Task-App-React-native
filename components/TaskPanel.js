@@ -1,17 +1,21 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import {Card, CardItem, Text } from 'native-base'
 
 export default class TaskPanel extends Component {
 
   render () {
-    return (<View>
-              <Text key={this.props.id}>
-                {this.props.title + '  Task Assigned By  ' + this.props.userlist[this.props.taskby]}
-              </Text>
-            </View>)
+    return (   <Card>
+                   <CardItem header>
+                     <Text>
+                     {this.props.title}
+                     </Text>
+                       <Text>
+                     {this.props.duedate}
+                     </Text>
+                   </CardItem>
+                   <CardItem>
+                    <Text> {'Assigned By  ' + this.props.userlist[this.props.taskby]}</Text>
+                   </CardItem>
+                 </Card>)
   }
 }
-
-const style = StyleSheet.create({
-    
-})
