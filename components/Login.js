@@ -39,6 +39,7 @@ export default class Login extends Component {
           authToken: null,
           loggedAccount: null
         })
+        
       })
       .catch((e) => console.log('Failed to logout'))
   }
@@ -70,10 +71,12 @@ export default class Login extends Component {
   }
 
   buttonHandle () {
+    this.props.onLoginClick("1234")
     this.props.navigator.pop()
   }
 
   render () {
+    console.log(this.props)
     return ( <View style={styles.container}>
         { this.state.loggedAccount ? this.renderUserLogged() : this.renderLogin() }
               <Button onPress={this.buttonHandle.bind(this)} title='Back' />

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Container, Header, Title, Content, Card, CardItem, Text } from 'native-base'
+import { Container, Header, Title, Content, Card, CardItem, Text, Icon, Button, Drawer, Spinner } from 'native-base'
 import TaskPanel from './TaskPanel'
+import NavBar from './NavBar'
 
 export default class Dashboard extends Component {
 
@@ -8,7 +9,7 @@ export default class Dashboard extends Component {
     this.props.navigator.pop()
   }
   componentWillMount () {
-    fetch('http://35.154.42.175:3000/appdashboard/'+this.props.id)
+    fetch('http://35.154.42.175:3000/appdashboard/' + this.props.id)
       .then(response => response.json())
       .then((reply) => {
         this.setState({
@@ -23,26 +24,17 @@ export default class Dashboard extends Component {
     if (!this.state) {
       return (
         <Container>
-          <Header>
-            <Title>
-              Dashboard
-            </Title>
-          </Header>
+            <NavBar />
           <Content>
-            <Text>
-              Loading
-            </Text>
+            <Spinner color='blue' />
           </Content>
         </Container>)
     }
     return (
       <Container>
-        <Header>
-          <Title>
-            Dashboard
-          </Title>
-        </Header>
-        <Content style={{padding:5}}>
+          <NavBar />
+   
+        <Content style={{padding: 5}}>
           {this.state.taskby.map(function (data) {
              return (
                <TaskPanel

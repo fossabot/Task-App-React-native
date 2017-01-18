@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Text, View,Button,TextInput} from 'react-native'
+import * as SideMenu from 'react-native-side-menu'
 
 export default class UpdateProfile extends Component {
     componentWillMount(){
@@ -16,6 +17,7 @@ export default class UpdateProfile extends Component {
     this.props.navigator.pop()
   }
   render () {
+    console.log(this.props)
       if(!this.state){
           return (<View style={this.props.style.container}>
               <Text>
@@ -24,12 +26,14 @@ export default class UpdateProfile extends Component {
               <Button onPress={this.buttonHandle.bind(this)} title='Back' />
             </View>)
       }
-    return (<View style={this.props.style.container}>
-            
+      
+    return (
+      <View style={this.props.style.container}>
               <Text>
                 {this.state.data}
               </Text>
               <Button onPress={this.buttonHandle.bind(this)} title='Back' />
-            </View>)
+            </View>
+    )
   }
 }
