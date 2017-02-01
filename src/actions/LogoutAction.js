@@ -1,4 +1,5 @@
 function CreateLogoutAction (){
-   return {type : 'LOGOUT'}
+   return {type : 'LOGOUT',
+   id : null}
 }
 export default CreateLogoutAction

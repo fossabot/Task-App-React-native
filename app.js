@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Navigator, } from 'react-native';
 import {Provider} from 'react-redux'
-import configStore from './store/configStore'
+import configStore from './src/store/configStore'
 
+import Dashboard from './src/components/Dashboard/'
+import Main from './src/components/Main/'
+import CreateTask from './src/components/CreateTask/CreateTask'
 
-import Dashboard from './components/Dashboard'
-import CreateTask from './components/CreateTask'
-import Home from './components/Home' 
-import UpdateProfileConatiner from './containers/UpdateProfileConatiner'
-import LoginConatiner from './containers/LoginContainer'
-import Main from './components/Main'
+import UpdateProfile from './src/components/UpdateProfile/UpdateProfile'
 
 const store = configStore()
 
@@ -22,16 +20,10 @@ const store = configStore()
       return <Main navigator={navigator}/>
     }
      if (route.name === 'updateprofile') {
-      return <UpdateProfileConatiner navigator={navigator} style={style}/>
+      return <UpdateProfile navigator={navigator} style={style}/>
     }
     if (route.name === 'createtask') {
       return <CreateTask navigator={navigator} style={style}/>
-    }
-     if (route.name === 'login') {
-      return <LoginConatiner navigator={navigator} style={style}/>
-    }
-     if (route.name === 'home') {
-      return <Home navigator={navigator} style={style}/>
     }
   }
 
@@ -39,7 +31,7 @@ const store = configStore()
   render() {
     return (
         <Provider store={store}>
-        <Navigator initialRoute={{ name: 'home'}} renderScene={this.renderComponent.bind(this)} />
+        <Navigator initialRoute={{ name: 'main'}} renderScene={this.renderComponent.bind(this)} />
         </Provider>
     );
   }

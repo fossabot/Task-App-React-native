@@ -1,10 +1,10 @@
-import Login from '../components/Login'
+import Main from './Main'
 import { connect } from 'react-redux'
-import CreateLoginAction from '../actions/LoginAction'
+import CreateLoginAction from '../../actions/LoginAction'
 
 const mapStateToProps = (state) => ({ user : state })
     
 
 const mapDispatchToProps = (dispatch) => ({onLoginClick: (id) => dispatch(CreateLoginAction(id))})
 
-export default LoginConatiner = connect(mapStateToProps, mapDispatchToProps)(Login)
+export default MainContainer = connect(mapStateToProps, mapDispatchToProps)(Main)

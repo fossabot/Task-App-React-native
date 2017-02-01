@@ -24,7 +24,16 @@ export default class Login extends Component {
             authToken: token,
             loggedAccount: account
           })
-        })
+          this.props.onLoginClick(account.id)
+          this.props.navigator.push({
+      name: 'dashboard',
+      passProps: {
+        id: account.id,
+        phone: account.phoneNumber.number
+      }
+    })
+    
+      })
     }
   }
 
@@ -44,42 +53,21 @@ export default class Login extends Component {
       .catch((e) => console.log('Failed to logout'))
   }
 
-  renderUserLogged() {
-    const { id, phoneNumber } = this.state.loggedAccount;
-
-    return (
-      <View>
-        <TouchableOpacity style={styles.button} onPress={() => this.onLogoutPressed()}>
-          <Text style={styles.buttonText}>Logout</Text>
-        </TouchableOpacity>
-        <Text style={styles.label}>Account Kit Id</Text>
-        <Text style={styles.text}>{id}</Text>
-        <Text style={styles.label}>Phone Number</Text>
-        <Text style={styles.text}>{phoneNumber ? `${phoneNumber.countryCode} ${phoneNumber.number}` : ''}</Text>
-      </View>
-    )
-  }
-    renderLogin() {
-    return (
-      <View>
-        <LoginButton style={styles.button} type="phone"
-          onLogin={(token) => this.onLogin(token)} onError={(e) => this.onLogin(e)}>
-          <Text style={styles.buttonText}>SMS</Text>
-        </LoginButton>
-      </View>
-    )
-  }
-
   buttonHandle () {
-    this.props.onLoginClick("1234")
-    this.props.navigator.pop()
+    this.props.onLoginClick("140699849744149")
+     this.props.navigator.push({
+      name: 'dashboard'
+     })
+
   }
 
   render () {
-    console.log(this.props)
     return ( <View style={styles.container}>
-        { this.state.loggedAccount ? this.renderUserLogged() : this.renderLogin() }
-              <Button onPress={this.buttonHandle.bind(this)} title='Back' />
+          <LoginButton style={styles.button} type="phone"
+          onLogin={(token) => this.onLogin(token)} onError={(e) => this.onLogin(e)}>
+          <Text style={styles.buttonText}>SMS</Text>
+        </LoginButton>
+              <Button onPress={this.buttonHandle.bind(this)} title='Direct Login' />
             </View>)
   }
 }
