@@ -17,7 +17,7 @@ export default class CreateTask extends Component {
       isOpen: true
     })
   }
-  componentWillMount () {
+  componentDidMount () {
     fetch('http://35.154.42.175:3000/getuserdata')
       .then(res => res.json())
       .then((reply) => {
@@ -43,9 +43,10 @@ export default class CreateTask extends Component {
             date: this.state.date
           })
         }else {
+          let newdate = new Date (result.year, result.month, result.day)
           this.setState({
-            datetext: new Date().toLocaleDateString(),
-            date: new Date()
+            datetext: newdate.toLocaleDateString(),
+            date: newdate
 
           })
         }
@@ -66,7 +67,7 @@ export default class CreateTask extends Component {
     else if (this.state.date === null) {
       Alert.alert('Select Date')
     }else {
-      fetch('http://192.168.42.210:3000/appformdata', {
+      fetch('http://35.154.42.175:3000/appcreatetask', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -76,16 +77,18 @@ export default class CreateTask extends Component {
           taskto: this.state.taskto,
           taskname: this.state.taskname,
           taskdetails: this.state.taskdetails,
-          date: this.state.datetext
+          date: this.state.datetext,
+          id:this.props.user.id
         })
 
       }).then(reply => {
         this.props.navigator.push({
-          name: 'home'
+          name: 'dashboard'
         })
       }).catch(err => err)
     }
   }
+
   renderLoading () {
     return (
       <Content style={{alignSelf: 'center'}}>
@@ -93,6 +96,8 @@ export default class CreateTask extends Component {
       </Content>)
   }
   renderData () {
+    console.log(this.state.datetext)
+    console.log(this.props)
     let tasktoArray = [{value: 0,label: 'Assigned To'}]
     this.state.data.forEach(val => tasktoArray.push({value: val.id,label: val.fname + ' ' + val.lname}))
     return (
@@ -135,17 +140,18 @@ export default class CreateTask extends Component {
                             onItemSelected={this.onMenuItemSelected}
                             navigator={this.props.navigator}
                             user={this.props.user}
-                            onLogoutClick={this.props.onLogoutClick} />
-
+                            onLogoutClick={this.props.onLogoutClick}
+                            />
+                          
     return (
       <SideMenu isOpen={this.state.isOpen} menu={MenuComponent} menuPosition='right'>
         <Container style={{ backgroundColor: 'white'}}>
           <Header iconRight>
-            <Button transparent>
+            <Button transparent onPress={() => this.props.navigator.pop()}>
               <Icon name='ios-arrow-back' />
             </Button>
             <Title>
-              Dashboard
+              Create Task
             </Title>
             <Button transparent onPress={() => this.toggleSideMenu()}>
               <Icon name='ios-menu' />

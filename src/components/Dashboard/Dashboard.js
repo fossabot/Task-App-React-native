@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View ,Alert,BackAndroid} from 'react-native'
+import { View, Alert, BackAndroid } from 'react-native'
 import { SideMenu } from 'react-native-elements'
 import { Container, Header, Title, Content, Card, CardItem, Text, Icon, Button, Spinner } from 'native-base'
 import Menu from '../SideMenu/Menu'
@@ -23,30 +23,33 @@ export default class Dashboard extends Component {
     })
   }
   componentWillMount () {
-    fetch('http://35.154.42.175:3000/appdashboard/'+this.props.user.id)
+    fetch('http://35.154.42.175:3000/appdashboard/' + this.props.user.id)
       .then(response => response.json())
       .then((reply) => {
         this.setState({
           taskby: reply.taskby,
           taskto: reply.taskto,
-          userlist: reply.userlist
+          userlist: reply.userlist,
+          isOpen: false
         })
       })
   }
+
   toggleSideMenu () {
     this.setState({
       isOpen: true
     })
   }
+
   renderLoading () {
     return (
-      <Content style={{alignSelf:'center'}}>
+      <Content style={{alignSelf: 'center'}}>
         <Spinner color='blue' />
       </Content>)
   }
   renderData () {
     const that = this
-    return ( <Content style={{padding : 17}}>
+    return ( <Content style={{padding: 17}}>
                {this.state.taskby.map(function (data) {
                   return (
                     <Card key={data.id}>
@@ -86,11 +89,17 @@ export default class Dashboard extends Component {
                 })}
              </Content>)
   }
-  
+
   render () {
-    const MenuComponent = <Menu onItemSelected={this.onMenuItemSelected} navigator={this.props.navigator} user={this.props.user} onLogoutClick={this.props.onLogoutClick}/>
+    const MenuComponent = <Menu
+                            onItemSelected={this.onMenuItemSelected}
+                            navigator={this.props.navigator}
+                            user={this.props.user}
+                            onLogoutClick={this.props.onLogoutClick}
+                             />
 
     return (
+
       <SideMenu isOpen={this.state.isOpen} menu={MenuComponent} menuPosition='right'>
         <Container style={{ flex: 1, backgroundColor: 'white'}}>
           <Header iconRight style={{marginRight: -14}}>

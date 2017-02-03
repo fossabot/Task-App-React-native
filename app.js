@@ -5,9 +5,9 @@ import configStore from './src/store/configStore'
 
 import Dashboard from './src/components/Dashboard/'
 import Main from './src/components/Main/'
-import CreateTask from './src/components/CreateTask/CreateTask'
+import CreateTask from './src/components/CreateTask/'
 
-import UpdateProfile from './src/components/UpdateProfile/UpdateProfile'
+import UpdateProfile from './src/components/UpdateProfile/'
 
 const store = configStore()
 
