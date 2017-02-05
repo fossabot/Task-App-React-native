@@ -4,7 +4,6 @@ import CreateLoginAction from '../../actions/LoginAction'
 
 const mapStateToProps = (state) => ({ user : state })
     
-
-const mapDispatchToProps = (dispatch) => ({onLoginClick: (id) => dispatch(CreateLoginAction(id))})
+const mapDispatchToProps = dispatch => ({onLoginClick: id => dispatch(CreateLoginAction(id))})
 
 export default MainContainer = connect(mapStateToProps, mapDispatchToProps)(Main)

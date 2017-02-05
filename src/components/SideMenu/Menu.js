@@ -9,11 +9,13 @@ const {
 
 export default class Menu extends Component {
     buttonHandle(e){
+        this.props.SideBarClose()
          this.props.navigator.push({
       name: e
      })
     }
     logOutButton(){
+        this.props.SideBarClose()
         this.props.onLogoutClick()
         this.props.navigator.push({
             name:'main'

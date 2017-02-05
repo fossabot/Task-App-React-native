@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { TouchableWithoutFeedback, DatePickerAndroid, View, TextInput, StyleSheet, Picker, Alert, ToolbarAndroid } from 'react-native'
 import { Container, Header, Title, Content, Text, Spinner, Button, Input, InputGroup, List, ListItem, Icon } from 'native-base'
-import Menu from '../SideMenu/Menu'
+import Menu from '../SideMenu/'
 import { SideMenu } from 'react-native-elements'
 
 export default class CreateTask extends Component {
@@ -13,6 +13,8 @@ export default class CreateTask extends Component {
     this.toggleSideMenu = this.toggleSideMenu.bind(this)
   }
   toggleSideMenu () {
+        this.props.SideBarOpen()
+
     this.setState({
       isOpen: true
     })
@@ -96,8 +98,6 @@ export default class CreateTask extends Component {
       </Content>)
   }
   renderData () {
-    console.log(this.state.datetext)
-    console.log(this.props)
     let tasktoArray = [{value: 0,label: 'Assigned To'}]
     this.state.data.forEach(val => tasktoArray.push({value: val.id,label: val.fname + ' ' + val.lname}))
     return (
@@ -140,11 +140,10 @@ export default class CreateTask extends Component {
                             onItemSelected={this.onMenuItemSelected}
                             navigator={this.props.navigator}
                             user={this.props.user}
-                            onLogoutClick={this.props.onLogoutClick}
                             />
                           
     return (
-      <SideMenu isOpen={this.state.isOpen} menu={MenuComponent} menuPosition='right'>
+      <SideMenu isOpen={this.props.user.sideBarStatus} menu={MenuComponent} menuPosition='right'>
         <Container style={{ backgroundColor: 'white'}}>
           <Header iconRight>
             <Button transparent onPress={() => this.props.navigator.pop()}>

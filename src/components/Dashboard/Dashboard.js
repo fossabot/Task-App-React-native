@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Alert, BackAndroid } from 'react-native'
 import { SideMenu } from 'react-native-elements'
 import { Container, Header, Title, Content, Card, CardItem, Text, Icon, Button, Spinner } from 'native-base'
-import Menu from '../SideMenu/Menu'
+import Menu from '../SideMenu/'
 
 export default class Dashboard extends Component {
   constructor () {
@@ -36,6 +36,7 @@ export default class Dashboard extends Component {
   }
 
   toggleSideMenu () {
+    this.props.SideBarOpen()
     this.setState({
       isOpen: true
     })
@@ -95,12 +96,10 @@ export default class Dashboard extends Component {
                             onItemSelected={this.onMenuItemSelected}
                             navigator={this.props.navigator}
                             user={this.props.user}
-                            onLogoutClick={this.props.onLogoutClick}
                              />
 
     return (
-
-      <SideMenu isOpen={this.state.isOpen} menu={MenuComponent} menuPosition='right'>
+      <SideMenu isOpen={this.props.user.sideBarStatus} menu={MenuComponent} menuPosition='right'>
         <Container style={{ flex: 1, backgroundColor: 'white'}}>
           <Header iconRight style={{marginRight: -14}}>
             <Title>
