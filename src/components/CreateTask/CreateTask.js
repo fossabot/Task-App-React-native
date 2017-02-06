@@ -19,7 +19,7 @@ export default class CreateTask extends Component {
       isOpen: true
     })
   }
-  componentDidMount () {
+  componentWillMount () {
     fetch('http://35.154.42.175:3000/getuserdata')
       .then(res => res.json())
       .then((reply) => {
@@ -32,7 +32,6 @@ export default class CreateTask extends Component {
         date: null})
       })
   }
-
   dateChange () {
     DatePickerAndroid.open({
       date: new Date(),
@@ -136,6 +135,8 @@ export default class CreateTask extends Component {
   }
 
   render () {
+        console.log("hello")
+
     const MenuComponent = <Menu
                             onItemSelected={this.onMenuItemSelected}
                             navigator={this.props.navigator}

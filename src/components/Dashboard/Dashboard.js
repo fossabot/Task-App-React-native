@@ -14,7 +14,7 @@ export default class Dashboard extends Component {
   }
   componentDidMount () {
     BackAndroid.addEventListener('hardwareBackPress', () => {
-      if (this.props.navigator.getCurrentRoutes().length > 1) {
+      if (this.props.navigator.getCurrentRoutes().length > 1 && this.props.navigator.getCurrentRoutes()[0].name !== 'main') {
         this.props.navigator.pop()
         return true // do not exit app
       } else {
