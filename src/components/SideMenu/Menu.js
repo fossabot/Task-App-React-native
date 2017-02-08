@@ -17,7 +17,7 @@ export default class Menu extends Component {
     logOutButton(){
         this.props.SideBarClose()
         this.props.onLogoutClick()
-        this.props.navigator.push({
+        this.props.navigator.resetTo({
             name:'main'
         })
     }

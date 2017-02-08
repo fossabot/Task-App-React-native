@@ -1,20 +1,22 @@
 import React, { Component } from 'react'
-import { View, Alert, BackAndroid } from 'react-native'
+import { View, Alert, BackAndroid ,StyleSheet} from 'react-native'
 import { SideMenu } from 'react-native-elements'
 import { Container, Header, Title, Content, Card, CardItem, Text, Icon, Button, Spinner } from 'native-base'
 import Menu from '../SideMenu/'
+import Taskpanel from './TaskPanel'
 
 export default class Dashboard extends Component {
   constructor () {
     super()
     this.state = {
-      isOpen: false
+      isOpen: false,
+      panelid: null
     }
     this.toggleSideMenu = this.toggleSideMenu.bind(this)
   }
   componentDidMount () {
     BackAndroid.addEventListener('hardwareBackPress', () => {
-      if (this.props.navigator.getCurrentRoutes().length > 1 && this.props.navigator.getCurrentRoutes()[0].name !== 'main') {
+      if (this.props.navigator.getCurrentRoutes().length > 1) {
         this.props.navigator.pop()
         return true // do not exit app
       } else {
@@ -42,6 +44,18 @@ export default class Dashboard extends Component {
     })
   }
 
+  panelOpen(e) {
+      if(this.state.panelid===e){
+       this.setState({
+      panelid: null
+    })
+    }else{
+          this.setState({
+      panelid: e
+    })
+    }
+  }
+
   renderLoading () {
     return (
       <Content style={{alignSelf: 'center'}}>
@@ -50,48 +64,72 @@ export default class Dashboard extends Component {
   }
   renderData () {
     const that = this
-    return ( <Content style={{padding: 17}}>
+    return ( <Content style={{padding: 10}}>
                {this.state.taskby.map(function (data) {
+                                     let StatusStyle = style.Incomplete
+                  if(data.status === 'Completed') StatusStyle = style.Completed
                   return (
-                    <Card key={data.id}>
-                      <CardItem header>
-                        <Text>
-                          {data.title}
-                        </Text>
-                        <Text>
-                          {data.duedate}
-                        </Text>
+                    
+                    <Card key={data.id} style={StatusStyle}>
+                      <CardItem style={style.CardBody} button onPress={that.panelOpen.bind(that,data.id)}>
+                          <View style={style.cardHeader}>
+                          <Text style={style.HeaderElements}>
+                            {data.title.toUpperCase()}
+                          </Text>
+                          <Text style={style.HeaderElements}>
+                            {data.duedate}
+                          </Text>
+                        </View>
+                        <View style={style.persons}>
+                          <Text style={style.textStyle}>
+                            {that.state.userlist[data.taskby]}    
+                          </Text>
+                          <Icon name="ios-arrow-round-forward" />  
+                          <Text style={style.textStyle}>
+                            {that.state.userlist[data.taskto]}
+                          </Text>
+                        </View>
                       </CardItem>
-                      <CardItem>
-                        <Text>
-                          {'Assigned By  ' + that.state.userlist[data.taskby]}
-                        </Text>
-                      </CardItem>
+                      {(that.state.panelid === data.id) ? (<Taskpanel/>): null}
                     </Card>
                   )
                 })}
                {this.state.taskto.map(function (data) {
+                    let StatusStyle = style.Incomplete
+                   if(data.status === 'Completed') StatusStyle = style.Completed
                   return (
-                    <Card key={data.id}>
-                      <CardItem header>
-                        <Text>
-                          {data.title}
+               
+                         <Card key={data.id} style={StatusStyle}>
+                      <CardItem style={style.CardBody} button onPress={that.panelOpen.bind(that,data.id)}>
+                          <View style={style.cardHeader}>
+                         <Text style={style.HeaderElements}>
+                          {data.title.toUpperCase()}
                         </Text>
-                        <Text>
+                        <Text style={style.HeaderElements}>
                           {data.duedate}
                         </Text>
+                        </View>
+                        <View style={style.persons}>
+                          <Text style={style.textStyle}>
+                            {that.state.userlist[data.taskby]}    
+                          </Text>
+                          <Icon name="ios-arrow-round-forward" />  
+                          <Text style={style.textStyle}>
+                            {that.state.userlist[data.taskto]}
+                          </Text>
+                        </View>
                       </CardItem>
-                      <CardItem>
-                        <Text>
-                          {'Assigned By  ' + that.state.userlist[data.taskby]}
-                        </Text>
-                      </CardItem>
-                    </Card>)
+                      {(that.state.panelid === data.id) ? (<Taskpanel/>): null}
+
+                    </Card>
+               )
                 })}
+                <Text> </Text>
              </Content>)
   }
 
   render () {
+    console.log(this.state.panelid)
     const MenuComponent = <Menu
                             onItemSelected={this.onMenuItemSelected}
                             navigator={this.props.navigator}
@@ -116,3 +154,32 @@ export default class Dashboard extends Component {
     )
   }
 }
+const style= StyleSheet.create({
+  CardBody:{
+    padding:10,
+    paddingTop:4,
+    paddingBottom:5
+  },
+  persons: {
+    flexDirection:"row",
+    flex:1,
+    justifyContent:"space-between"
+  },
+  cardHeader:{
+    flex:1,
+    flexDirection:'row',
+    justifyContent:'space-between',
+  },
+  HeaderElements:{
+    color:'#131418',
+    alignSelf:'center',
+    fontSize:17,
+    fontWeight:"500",
+  },
+  Completed : {
+    borderColor: '#09bc21', 
+  },
+  Incomplete : {
+    borderColor: '#fc5050', 
+  }
+})

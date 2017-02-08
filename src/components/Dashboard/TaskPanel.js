@@ -1,21 +1,22 @@
 import React, { Component } from 'react'
+import {StyleSheet} from 'react-native'   
 import {Card, CardItem, Text } from 'native-base'
 
 export default class TaskPanel extends Component {
 
   render () {
-    return (   <Card>
-                   <CardItem header>
-                     <Text>
-                     {this.props.title}
-                     </Text>
-                       <Text>
-                     {this.props.duedate}
-                     </Text>
-                   </CardItem>
-                   <CardItem>
-                    <Text> {'Assigned By  ' + this.props.userlist[this.props.taskby]}</Text>
-                   </CardItem>
-                 </Card>)
+    return (<CardItem style={style.container}>
+    <Text>Hello World</Text></CardItem>)
   }
 }
+
+const style = StyleSheet.create({
+  
+  container:{
+ padding:10,
+    paddingTop:0,
+    paddingBottom:5
+  }
+
+  
+})

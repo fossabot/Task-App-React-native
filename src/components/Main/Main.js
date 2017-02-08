@@ -62,7 +62,6 @@ export default class Login extends Component {
   }
 
   render () {
-    console.log(this.props.navigator.getCurrentRoutes()[0].name)
     return ( <View style={styles.container}>
           <LoginButton style={styles.button} type="phone"
           onLogin={(token) => this.onLogin(token)} onError={(e) => this.onLogin(e)}>
