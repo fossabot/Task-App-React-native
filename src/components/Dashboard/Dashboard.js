@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { View, Alert, BackAndroid ,StyleSheet} from 'react-native'
+import { View, Alert, BackAndroid, StyleSheet } from 'react-native'
 import { SideMenu } from 'react-native-elements'
 import { Container, Header, Title, Content, Card, CardItem, Text, Icon, Button, Spinner } from 'native-base'
 import Menu from '../SideMenu/'
 import Taskpanel from './TaskPanel'
+import TaskList from './TaskList'
 
 export default class Dashboard extends Component {
   constructor () {
@@ -44,15 +45,15 @@ export default class Dashboard extends Component {
     })
   }
 
-  panelOpen(e) {
-      if(this.state.panelid===e){
-       this.setState({
-      panelid: null
-    })
-    }else{
-          this.setState({
-      panelid: e
-    })
+  panelOpen (e) {
+    if (this.state.panelid === e) {
+      this.setState({
+        panelid: null
+      })
+    }else {
+      this.setState({
+        panelid: e
+      })
     }
   }
 
@@ -66,75 +67,37 @@ export default class Dashboard extends Component {
     const that = this
     return ( <Content style={{padding: 10}}>
                {this.state.taskby.map(function (data) {
-                                     let StatusStyle = style.Incomplete
-                  if(data.status === 'Completed') StatusStyle = style.Completed
-                  return (
-                    
-                    <Card key={data.id} style={StatusStyle}>
-                      <CardItem style={style.CardBody} button onPress={that.panelOpen.bind(that,data.id)}>
-                          <View style={style.cardHeader}>
-                          <Text style={style.HeaderElements}>
-                            {data.title.toUpperCase()}
-                          </Text>
-                          <Text style={style.HeaderElements}>
-                            {data.duedate}
-                          </Text>
-                        </View>
-                        <View style={style.persons}>
-                          <Text style={style.textStyle}>
-                            {that.state.userlist[data.taskby]}    
-                          </Text>
-                          <Icon name="ios-arrow-round-forward" />  
-                          <Text style={style.textStyle}>
-                            {that.state.userlist[data.taskto]}
-                          </Text>
-                        </View>
-                      </CardItem>
-                      {(that.state.panelid === data.id) ? (<Taskpanel/>): null}
-                    </Card>
-                  )
-                })}
+                                                    let StatusStyle = style.Incomplete
+                                                    if(data.status === 'Completed') StatusStyle = style.Completed
+                                                    return (
+                                                      
+                                                      <Card key={data.id} style={StatusStyle}>
+                                                        <CardItem style={style.CardBody} button onPress={that.panelOpen.bind(that,data.id)}>
+                                                            <TaskList task={data} userlist={that.state.userlist} />
+                                                        </CardItem>
+                                                        {(that.state.panelid === data.id) ? (<Taskpanel task={data} userid={that.props.user.id} navigator={that.props.navigator}/>): null}
+                                                      </Card>
+                                                    )
+                                                  })}
                {this.state.taskto.map(function (data) {
-                    let StatusStyle = style.Incomplete
-                   if(data.status === 'Completed') StatusStyle = style.Completed
-                  return (
-               
-                         <Card key={data.id} style={StatusStyle}>
-                      <CardItem style={style.CardBody} button onPress={that.panelOpen.bind(that,data.id)}>
-                          <View style={style.cardHeader}>
-                         <Text style={style.HeaderElements}>
-                          {data.title.toUpperCase()}
-                        </Text>
-                        <Text style={style.HeaderElements}>
-                          {data.duedate}
-                        </Text>
-                        </View>
-                        <View style={style.persons}>
-                          <Text style={style.textStyle}>
-                            {that.state.userlist[data.taskby]}    
-                          </Text>
-                          <Icon name="ios-arrow-round-forward" />  
-                          <Text style={style.textStyle}>
-                            {that.state.userlist[data.taskto]}
-                          </Text>
-                        </View>
-                      </CardItem>
-                      {(that.state.panelid === data.id) ? (<Taskpanel/>): null}
-
-                    </Card>
-               )
-                })}
-                <Text> </Text>
+                                                                    let StatusStyle = style.Incomplete
+                                                                    if(data.status === 'Completed') StatusStyle = style.Completed
+                                                                  return (
+                                                                          <Card key={data.id} style={StatusStyle}>
+                                                                            <CardItem style={style.CardBody} button onPress={that.panelOpen.bind(that,data.id)}>
+                                                                              <TaskList task={data} userlist={that.state.userlist} />
+                                                                            </CardItem>
+                                                                            {(that.state.panelid === data.id) ? (<Taskpanel task={data} userid={that.props.user.id} navigator={that.props.navigator}/>): null}
+                                                                          </Card>
+                                                                )
+                                                                })}
+               <Text>
+               </Text>
              </Content>)
   }
 
   render () {
-    console.log(this.state.panelid)
-    const MenuComponent = <Menu
-                            onItemSelected={this.onMenuItemSelected}
-                            navigator={this.props.navigator}
-                            user={this.props.user}
-                             />
+    const MenuComponent = <Menu onItemSelected={this.onMenuItemSelected} navigator={this.props.navigator} user={this.props.user} />
 
     return (
       <SideMenu isOpen={this.props.user.sideBarStatus} menu={MenuComponent} menuPosition='right'>
@@ -154,32 +117,16 @@ export default class Dashboard extends Component {
     )
   }
 }
-const style= StyleSheet.create({
-  CardBody:{
-    padding:10,
-    paddingTop:4,
-    paddingBottom:5
+const style = StyleSheet.create({
+  CardBody: {
+    padding: 10,
+    paddingTop: 4,
+    paddingBottom: 5
   },
-  persons: {
-    flexDirection:"row",
-    flex:1,
-    justifyContent:"space-between"
+  Completed: {
+    borderColor: '#09bc21'
   },
-  cardHeader:{
-    flex:1,
-    flexDirection:'row',
-    justifyContent:'space-between',
-  },
-  HeaderElements:{
-    color:'#131418',
-    alignSelf:'center',
-    fontSize:17,
-    fontWeight:"500",
-  },
-  Completed : {
-    borderColor: '#09bc21', 
-  },
-  Incomplete : {
-    borderColor: '#fc5050', 
+  Incomplete: {
+    borderColor: '#fc5050'
   }
 })

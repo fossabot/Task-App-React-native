@@ -89,8 +89,8 @@ android {
         applicationId "com.taskapp"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 7
-        versionName "2.05"
+        versionCode 8
+        versionName "2.06"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
