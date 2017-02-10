@@ -67,36 +67,37 @@ export default class Dashboard extends Component {
     const that = this
     return ( <Content style={{padding: 10}}>
                {this.state.taskby.map(function (data) {
-                                                    let StatusStyle = style.Incomplete
-                                                    if(data.status === 'Completed') StatusStyle = style.Completed
-                                                    return (
-                                                      
-                                                      <Card key={data.id} style={StatusStyle}>
-                                                        <CardItem style={style.CardBody} button onPress={that.panelOpen.bind(that,data.id)}>
-                                                            <TaskList task={data} userlist={that.state.userlist} />
-                                                        </CardItem>
-                                                        {(that.state.panelid === data.id) ? (<Taskpanel task={data} userid={that.props.user.id} navigator={that.props.navigator}/>): null}
-                                                      </Card>
-                                                    )
-                                                  })}
+                    let StatusStyle = style.Incomplete
+                    if(data.status === 'Completed') StatusStyle = style.Completed
+                    return (
+                      
+                      <Card key={data.id} style={StatusStyle}>
+                        <CardItem style={style.CardBody} button onPress={that.panelOpen.bind(that,data.id)}>
+                            <TaskList task={data} userlist={that.state.userlist} />
+                        </CardItem>
+                        {(that.state.panelid === data.id) ? (<Taskpanel task={data} userid={that.props.user.id} navigator={that.props.navigator}/>): null}
+                      </Card>
+                    )
+                  })}
                {this.state.taskto.map(function (data) {
-                                                                    let StatusStyle = style.Incomplete
-                                                                    if(data.status === 'Completed') StatusStyle = style.Completed
-                                                                  return (
-                                                                          <Card key={data.id} style={StatusStyle}>
-                                                                            <CardItem style={style.CardBody} button onPress={that.panelOpen.bind(that,data.id)}>
-                                                                              <TaskList task={data} userlist={that.state.userlist} />
-                                                                            </CardItem>
-                                                                            {(that.state.panelid === data.id) ? (<Taskpanel task={data} userid={that.props.user.id} navigator={that.props.navigator}/>): null}
-                                                                          </Card>
-                                                                )
-                                                                })}
+                        let StatusStyle = style.Incomplete
+                        if(data.status === 'Completed') StatusStyle = style.Completed
+                      return (
+                              <Card key={data.id} style={StatusStyle}>
+                                <CardItem style={style.CardBody} button onPress={that.panelOpen.bind(that,data.id)}>
+                                  <TaskList task={data} userlist={that.state.userlist} />
+                                </CardItem>
+                                {(that.state.panelid === data.id) ? (<Taskpanel task={data} userid={that.props.user.id} navigator={that.props.navigator}/>): null}
+                              </Card>
+                    )
+                    })}
                <Text>
                </Text>
              </Content>)
   }
 
   render () {
+    console.log(this.state)
     const MenuComponent = <Menu onItemSelected={this.onMenuItemSelected} navigator={this.props.navigator} user={this.props.user} />
 
     return (

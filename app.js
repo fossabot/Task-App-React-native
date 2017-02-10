@@ -6,7 +6,7 @@ import configStore from './src/store/configStore'
 import Dashboard from './src/components/Dashboard/'
 import Main from './src/components/Main/'
 import CreateTask from './src/components/CreateTask/'
-
+import Chat from './src/components/Dashboard/Chat'
 import UpdateProfile from './src/components/UpdateProfile/'
 
 const store = configStore()
@@ -25,13 +25,16 @@ const store = configStore()
     if (route.name === 'createtask') {
       return <CreateTask navigator={navigator} style={style}/>
     }
+    if (route.name === 'chat') {
+      return <Chat navigator={navigator} {...route.passProps}/>
+    }
   }
 
 
   render() {
     return (
         <Provider store={store}>
-        <Navigator initialRoute={{ name: 'main'}} renderScene={this.renderComponent.bind(this)} />
+        <Navigator initialRoute={{ name: 'chat'}} renderScene={this.renderComponent.bind(this)} />
         </Provider>
     );
   }

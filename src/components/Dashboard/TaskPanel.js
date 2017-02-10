@@ -37,6 +37,12 @@ export default class TaskPanel extends Component {
       })
     }).catch(err => console.log(err))
   }
+
+  openChat(){
+    this.props.navigator.push({
+      name: 'chat'
+    })
+  }
   render () {
     return (
       <View>
@@ -57,7 +63,7 @@ export default class TaskPanel extends Component {
             <Icon name='md-trash' />
           </Button>
           ) : null}
-          <Button success style={style.buttons}>
+          <Button success style={style.buttons} onPress={this.openChat.bind(this)}>
             <Icon name='ios-chatboxes' />
           </Button>
         </CardItem>
