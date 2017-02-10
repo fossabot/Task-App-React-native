@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, TextInput,ScrollView } from 'react-native'
+import { StyleSheet, View, TextInput,ScrollView ,ListView} from 'react-native'
 import { Container, Content, Header, Text, Title, Icon,Button,ListItem } from 'native-base'
 
 export default class Chat extends Component {
@@ -7,22 +7,41 @@ export default class Chat extends Component {
     super(props)
     this.state = {
       text: 'Useless Multiline Placeholder',
-       chats:[]
+       chats:[],
+       oldchats:[],
     }
   }
 
   componentWillMount(){
-      fetch('http://35.154.42.175:3000/oldchats/5172')
+      fetch('http://35.154.42.175:3000/oldchats/'+this.props.taskid)
       .then(response => response.json())
-      .then((reply) => {
-        console.log(reply)
-        this.setState({
+      .then((oldchats) => 
+      {
+        this.setState({oldchats})
+      })
+  }
 
-          oldchats: reply
-        })
-    })
+  showOldchat(){
+    let i = 0
+return (<View>
+    {
+    this.state.oldchats.map(x=>{
+      i++
+      let chat = JSON.parse(x)
+      return (
+        <View key={i} style={style.ChatBubble}><Text>{chat.username} :  " {chat.message} "</Text>
+    <Text style={style.ChatTime}>{chat.time} </Text></View>
+
+      )})
+    }
+    </View>)
+
+  }
+  showLoading(){
+    return(<Text>Loading</Text>)
   }
   render () {
+    const that = this
     return (
       <Container>
         <Header>
@@ -32,9 +51,9 @@ export default class Chat extends Component {
         </Header>
         <View style={style.container}>
           <View style={style.ChatList} >
-              <ScrollView>
-           
-                    </ScrollView>
+            <ScrollView ref="scrollView" onContentSizeChange={(contentWidth, contentHeight)=>this.refs.scrollView.scrollTo(contentHeight)}>
+                {this.state.oldchats ? this.showOldchat() : this.showLoading}
+          </ScrollView>
         </View>
           <View style={style.ChatBox}>
             <TextInput
@@ -59,13 +78,13 @@ export default class Chat extends Component {
 
 const style = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor:'white'
   },
   ChatBox: {
     flex: 1,
     flexDirection:'row',
-    borderWidth: 1,
-         backgroundColor:'#5265ff'
+    backgroundColor:'#5265ff'
   },
   ChatList: {
     padding:-1,
@@ -78,6 +97,18 @@ margin:3,
   },
   sendButton:{
       flex:1
+  },
+  ChatBubble:{
+    borderWidth:2,
+    margin:5,
+    marginLeft:10,
+    marginRight:10,
+    borderRadius:20,
+    padding:10,
+    borderColor:'#2980b9'
+  },
+  ChatTime:{
+    fontSize:12
   }
 
 

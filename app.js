@@ -34,7 +34,7 @@ const store = configStore()
   render() {
     return (
         <Provider store={store}>
-        <Navigator initialRoute={{ name: 'chat'}} renderScene={this.renderComponent.bind(this)} />
+        <Navigator initialRoute={{ name: 'main'}} renderScene={this.renderComponent.bind(this)} />
         </Provider>
     );
   }

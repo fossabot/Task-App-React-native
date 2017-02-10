@@ -97,7 +97,6 @@ export default class Dashboard extends Component {
   }
 
   render () {
-    console.log(this.state)
     const MenuComponent = <Menu onItemSelected={this.onMenuItemSelected} navigator={this.props.navigator} user={this.props.user} />
 
     return (
