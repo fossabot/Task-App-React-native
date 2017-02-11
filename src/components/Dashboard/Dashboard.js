@@ -75,7 +75,7 @@ export default class Dashboard extends Component {
                         <CardItem style={style.CardBody} button onPress={that.panelOpen.bind(that,data.id)}>
                             <TaskList task={data} userlist={that.state.userlist} />
                         </CardItem>
-                        {(that.state.panelid === data.id) ? (<Taskpanel task={data} userid={that.props.user.id} navigator={that.props.navigator}/>): null}
+                        {(that.state.panelid === data.id) ? (<Taskpanel task={data} userlist={that.state.userlist} userid={that.props.user.id} navigator={that.props.navigator}/>): null}
                       </Card>
                     )
                   })}
@@ -87,7 +87,7 @@ export default class Dashboard extends Component {
                                 <CardItem style={style.CardBody} button onPress={that.panelOpen.bind(that,data.id)}>
                                   <TaskList task={data} userlist={that.state.userlist} />
                                 </CardItem>
-                                {(that.state.panelid === data.id) ? (<Taskpanel task={data} userid={that.props.user.id} navigator={that.props.navigator}/>): null}
+                                {(that.state.panelid === data.id) ? (<Taskpanel task={data} userlist={that.state.userlist} userid={that.props.user.id} navigator={that.props.navigator}/>): null}
                               </Card>
                     )
                     })}
