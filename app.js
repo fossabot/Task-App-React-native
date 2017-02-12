@@ -8,6 +8,7 @@ import Main from './src/components/Main/'
 import CreateTask from './src/components/CreateTask/'
 import Chat from './src/components/Dashboard/Chat'
 import UpdateProfile from './src/components/UpdateProfile/'
+import CreateProfile from './src/components/CreateProfile/'
 
 const store = configStore()
 
@@ -16,6 +17,9 @@ const store = configStore()
     if (route.name === 'dashboard') {
       return <Dashboard navigator={navigator} {...route.passProps}/>
     }
+    if (route.name === 'createprofile') {
+      return <CreateProfile navigator={navigator} {...route.passProps}/>
+    }
      if (route.name === 'main') {
       return <Main navigator={navigator}/>
     }
@@ -23,7 +27,7 @@ const store = configStore()
       return <UpdateProfile navigator={navigator} style={style}/>
     }
     if (route.name === 'createtask') {
-      return <CreateTask navigator={navigator} style={style}/>
+      return <CreateTask navigator={navigator} {...route.passProps}/>
     }
     if (route.name === 'chat') {
       return <Chat navigator={navigator} {...route.passProps}/>

@@ -46,6 +46,7 @@ export default class Dashboard extends Component {
   }
 
   panelOpen (e) {
+  this.props.SideBarClose()
     if (this.state.panelid === e) {
       this.setState({
         panelid: null

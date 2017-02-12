@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Button,StyleSheet,TouchableOpacity, Switch } from 'react-native'
+import { Text, View, Button,StyleSheet,TouchableOpacity, Switch,Image } from 'react-native'
 import AccountKit, {LoginButton, Color,StatusBarStyle,BackAndroid,} from 'react-native-facebook-account-kit'
 
 export default class Login extends Component {
@@ -10,7 +10,8 @@ export default class Login extends Component {
 
   configureAccountKit() {
     AccountKit.configure({
-      defaultCountry: "IN"
+      defaultCountry: "IN",
+      countryWhitelist: ['IN'], // [] by default
     })
   }
    onLogin(token) {
@@ -24,16 +25,15 @@ export default class Login extends Component {
             authToken: token,
             loggedAccount: account
           })
+          
           this.props.onLoginClick(account.id)
-          this.props.navigator.push({
-      name: 'dashboard',
-      passProps: {
-        id: account.id,
-        phone: account.phoneNumber.number
-      }
-    })
+     this.props.navigator.push({
+      name: 'createprofile',
+      passProps:{ id: account.id,
+        phone: account.phoneNumber.number}
+     })
     
-      })
+      }).catch(err => console.log(err))
     }
   }
 
@@ -56,18 +56,26 @@ export default class Login extends Component {
   buttonHandle () {
     this.props.onLoginClick("140699849744149")
      this.props.navigator.push({
-      name: 'dashboard'
+      name: 'createprofile',
+      passProps:{ id: 140699849744149,
+        phone: 9981017770}
      })
 
   }
 
   render () {
     return ( <View style={styles.container}>
+      <View style={styles.headertext}>
+          <Text style={styles.text}>Task Master</Text>
+          <Text> </Text>
+
+      </View>
+      <View style={styles.elements} >
           <LoginButton style={styles.button} type="phone"
           onLogin={(token) => this.onLogin(token)} onError={(e) => this.onLogin(e)}>
-          <Text style={styles.buttonText}>SMS</Text>
+          <Text style={styles.buttonText}>Login via SMS</Text>
         </LoginButton>
-              <Button onPress={this.buttonHandle.bind(this)} title='Direct Login' />
+        </View>
             </View>)
   }
 }
@@ -75,18 +83,20 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#2c3e50',
   },
   button: {
     height: 50,
     width: 300,
-    backgroundColor: '#085b7f',
+    borderRadius:25,
+    backgroundColor: '#3498db',
     marginBottom: 10
   },
   buttonText: {
-    fontSize: 20,
+    color:'white',
+    fontSize: 25,
+    fontWeight:"500",
     textAlign: 'center',
     margin: 10,
   },
@@ -97,8 +107,23 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   text: {
-    fontSize: 20,
+    color:'white',
+    fontSize: 50,
     textAlign: 'center',
-    margin: 10,
+    fontWeight:'700'
+  },
+   text2: {
+    color:'white',
+    fontSize: 25,
+    textAlign: 'center',
+    fontWeight:'500'
+  },
+  elements:{
+    flex:1,
+  },
+    headertext:{
+      justifyContent:'center',
+      alignItems:'center',
+    flex:1
   }
 })

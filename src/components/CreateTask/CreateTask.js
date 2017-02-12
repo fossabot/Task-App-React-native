@@ -135,8 +135,6 @@ export default class CreateTask extends Component {
   }
 
   render () {
-        console.log("hello")
-
     const MenuComponent = <Menu
                             onItemSelected={this.onMenuItemSelected}
                             navigator={this.props.navigator}
