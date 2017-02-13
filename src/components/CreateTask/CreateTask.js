@@ -108,26 +108,26 @@ export default class CreateTask extends Component {
              )
            })}
         </Picker>
-        <InputGroup>
+        <InputGroup style={{marginTop:15}}>
           <Input placeholder='Task Name' onChangeText= { text => this.setState({taskname: text})} />
         </InputGroup>
         <TextInput
           placeholder='Task Details'
-          style={{ fontSize: 15, borderBottomWidth:1,borderBottomColor:'#D8D8D6'}}
+          style={{ fontSize: 15, borderBottomWidth:1,borderBottomColor:'#D8D8D6', marginBottom:20}}
           multiline={true}
           numberOfLines={5}
           editable={true}
           maxLength={400}
           onChangeText={text => this.setState({taskdetails: text})} />
 
-        <TouchableWithoutFeedback onPress={this.dateChange.bind(this)}>
+        <TouchableWithoutFeedback onPress={this.dateChange.bind(this)} style={{marginBottom:10}}>
           <View style={{alignItems: 'center'}}>
             <Text style={style.datepicker}>
                <Icon name="md-calendar"/> {this.state.datetext}
             </Text>
           </View>
         </TouchableWithoutFeedback>
-        <Button info block onPress={this.submitButton.bind(this)}>
+        <Button info block onPress={this.submitButton.bind(this)} style={{marginTop:10}}>
           Submit
         </Button>
       </Content>
@@ -164,10 +164,10 @@ export default class CreateTask extends Component {
 }
 const style = StyleSheet.create({
   elements: {
-    fontSize: 15
+    fontSize: 15,
   },
   datepicker: {
     fontSize: 18,
-    height: 50
+    height: 50,
   }
 })

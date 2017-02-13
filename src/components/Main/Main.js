@@ -74,9 +74,18 @@ export default class Login extends Component {
       })
       .catch((e) => console.log('Failed to logout'))
   }
+
+  buttonHandle () {
+    this.props.onLoginClick("140699849744149")
+      this.props.navigator.push({
+       name: 'createprofile',
+       passProps:{ id: 140699849744149,
+         phone: 9981017770}
+     })
+ 
+   }
+  
   render () {
-
-
     return ( <View style={styles.container}>
       <View style={styles.headertext}>
           <Text style={styles.text}>Task Master</Text>
@@ -88,6 +97,8 @@ export default class Login extends Component {
           onLogin={(token) => this.onLogin(token)} onError={(e) => this.onLogin(e)}>
           <Text style={styles.buttonText}>Login via SMS</Text>
         </LoginButton>
+                  <Button onPress={this.buttonHandle.bind(this)} title='Direct Login' />
+
         </View>
             </View>)
   }

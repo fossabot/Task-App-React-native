@@ -36,9 +36,13 @@ let that = this
 })
 }
   sendMessage(){
-    let time = moment().format('HH:mm DD-MM-YY')
+    if(this.state.chatText===""){
+      Alert.alert("Input Text is Empty")
+    }else{
+      let time = moment().format('HH:mm DD-MM-YY')
     this.socket.emit('chat message', {chatroom: this.props.taskid,username: this.state.username,userid:this.props.userid,message: this.state.chatText,time: time})
     this.refs.chattext.clear()
+    }
   }
   showOldchat(){
     let i = 0
@@ -97,7 +101,7 @@ return (<View>
               maxLength={300}
               multiline={true}
               numberOfLines={4}
-              onChangeText={chatText => this.setState({chatText})} 
+              onChangeText={chatText => this.setState({chatText: chatText.trim()})} 
               style={style.TextInput}/>
               <View style={{flex:1,backgroundColor:'green',}}>
               <Button block style={style.sendButton} onPress={this.sendMessage.bind(this)}>
