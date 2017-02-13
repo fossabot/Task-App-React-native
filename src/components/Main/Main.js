@@ -1,12 +1,35 @@
 import React, { Component } from 'react'
-import { Text, View, Button,StyleSheet,TouchableOpacity, Switch,Image } from 'react-native'
-import AccountKit, {LoginButton, Color,StatusBarStyle,BackAndroid,} from 'react-native-facebook-account-kit'
+import { Text, View, Button,StyleSheet,TouchableOpacity, Switch,Image,PermissionsAndroid } from 'react-native'
+import AccountKit, {LoginButton, Color,StatusBarStyle} from 'react-native-facebook-account-kit'
 
 export default class Login extends Component {
    state = {
     authToken: null,
     loggedAccount: null
   }
+  requestSMSPermission= async function () {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.RECEIVE_SMS,
+      {
+        'title': 'Cool Photo App Camera Permission',
+        'message': 'Cool Photo App needs access to your camera ' +
+                   'so you can take awesome pictures.'
+      }
+    )
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log("You can use the camera")
+    } else {
+      console.log("Camera permission denied")
+    }
+  } catch (err) {
+    console.warn(err)
+  }
+}
+  componentDidMount(){
+    this.requestSMSPermission()
+}
+
 
   configureAccountKit() {
     AccountKit.configure({
@@ -52,18 +75,9 @@ export default class Login extends Component {
       })
       .catch((e) => console.log('Failed to logout'))
   }
-
-  buttonHandle () {
-    this.props.onLoginClick("140699849744149")
-     this.props.navigator.push({
-      name: 'createprofile',
-      passProps:{ id: 140699849744149,
-        phone: 9981017770}
-     })
-
-  }
-
   render () {
+
+
     return ( <View style={styles.container}>
       <View style={styles.headertext}>
           <Text style={styles.text}>Task Master</Text>
