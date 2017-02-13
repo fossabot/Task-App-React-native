@@ -12,15 +12,14 @@ export default class Login extends Component {
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.RECEIVE_SMS,
       {
-        'title': 'Cool Photo App Camera Permission',
-        'message': 'Cool Photo App needs access to your camera ' +
-                   'so you can take awesome pictures.'
+        'title': 'Auto Read SMS',
+        'message': 'Auto Read OTP From Account Kit.'
       }
     )
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log("You can use the camera")
+      console.log("Auto Read OTP Enabled")
     } else {
-      console.log("Camera permission denied")
+      console.log("Auto Read OTP denied")
     }
   } catch (err) {
     console.warn(err)
