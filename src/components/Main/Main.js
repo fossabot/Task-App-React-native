@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, Button,StyleSheet,TouchableOpacity, Switch,Image,PermissionsAndroid ,AsyncStorage} from 'react-native'
 import AccountKit, {LoginButton, Color,StatusBarStyle} from 'react-native-facebook-account-kit'
 import Dashboard from '../Dashboard/'
+import codePush from "react-native-code-push";
 
 
 export default class Login extends Component {
@@ -33,6 +34,11 @@ componentWillMount(){
 
   componentDidMount(){
     this.requestSMSPermission()
+    
+      codePush.sync({
+          updateDialog: true,
+          installMode: codePush.InstallMode.IMMEDIATE
+        });
 }
 checkLogin = async () => {
   try {
@@ -155,7 +161,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color:'white',
-    fontSize: 50,
+    fontSize: 45,
     textAlign: 'center',
     fontWeight:'700'
   },

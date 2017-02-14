@@ -10,7 +10,8 @@ export default class Chat extends Component {
     this.state = {
       text: 'Useless Multiline Placeholder',
        chats:[],
-       username: this.props.userlist[this.props.userid]
+       username: this.props.userlist[this.props.userid],
+       chatText: ""
     }
     this.socket = SocketIOClient('http://35.154.42.175:3000');
 

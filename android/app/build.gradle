@@ -89,8 +89,8 @@ android {
         applicationId "com.taskapp"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 10
-        versionName "3.1.0"
+        versionCode 11
+        versionName "3.2.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -134,6 +134,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-code-push')
     compile project(':react-native-vector-icons')
     compile project(':react-native-facebook-account-kit')
     compile fileTree(dir: "libs", include: ["*.jar"])
