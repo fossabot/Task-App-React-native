@@ -17,9 +17,16 @@ export default class Dashboard extends Component {
   }
   componentDidMount () {
     BackAndroid.addEventListener('hardwareBackPress', () => {
-      if (this.props.navigator.getCurrentRoutes().length > 1) {
-        this.props.navigator.pop()
-        return true // do not exit app
+      let routeStack = this.props.navigator.getCurrentRoutes()
+      let currentComponent = routeStack[routeStack.length-1].name
+if(currentComponent === 'dashboard' || currentComponent === 'createprofile') {
+        this.props.SideBarClose()
+        BackAndroid.exitApp();
+        }
+   else if(this.props.navigator.getCurrentRoutes().length > 1 ) { 
+     this.props.navigator.pop()
+      this.props.SideBarClose()
+        return true
       } else {
         return false // exit app
       }

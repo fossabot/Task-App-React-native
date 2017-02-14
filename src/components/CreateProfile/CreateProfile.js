@@ -1,5 +1,5 @@
 import React , {Component} from 'react'
-import {StyleSheet, View, Text, ActivityIndicator} from 'react-native'
+import {StyleSheet, View, Text, ActivityIndicator,BackAndroid} from 'react-native'
 import Dashboard from '../Dashboard/'
 import CreateProfileForm from './CreateProfileForm'
 
@@ -18,7 +18,16 @@ export default class CreateProfile extends Component {
         })
       })
   }
-
+  componentDidMount () {
+    BackAndroid.addEventListener('hardwareBackPress', () => {
+      if (this.props.navigator.getCurrentRoutes().length > 1) {
+        this.props.navigator.pop()
+        return true // do not exit app
+      } else {
+        return false // exit app
+      }
+    })
+  }
   showWait(){
     return (
     <View style={style.content}>

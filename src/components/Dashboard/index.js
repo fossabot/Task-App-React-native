@@ -9,7 +9,7 @@ const mapStateToProps = state => ({ user : state })
 const mapDispatchToProps = dispatch => ({
     onLogoutClick: () => dispatch(CreateLogoutAction()),
     SideBarOpen: () => dispatch(SideBarOpen()),
-        SideBarClose: () => dispatch(SideBarClose())
+ SideBarClose: () => dispatch(SideBarClose())
 
 })
 

@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
+
 import {Container,Header,Title,List,ListItem,Text,Content,Icon} from 'native-base'
 const { 
   ScrollView,
   View,
-  Image
+  Image,
+  AsyncStorage
 } = require('react-native');
 
 
@@ -15,13 +17,21 @@ export default class Menu extends Component {
      })
     }
     logOutButton(){
-        this.props.SideBarClose()
+   this.deleteLogin()
+    }
+
+      deleteLogin = async () => {
+    try {
+      await AsyncStorage.removeItem('@taskapp:userdata');
+       this.props.SideBarClose()
         this.props.onLogoutClick()
         this.props.navigator.resetTo({
             name:'main'
         })
+    } catch (error) {
+     console.log(error)
     }
-
+  }
   render() {
 
     return (

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { Text, View, Button,StyleSheet,TouchableOpacity, Switch,Image,PermissionsAndroid } from 'react-native'
+import { Text, View, Button,StyleSheet,TouchableOpacity, Switch,Image,PermissionsAndroid ,AsyncStorage} from 'react-native'
 import AccountKit, {LoginButton, Color,StatusBarStyle} from 'react-native-facebook-account-kit'
+import Dashboard from '../Dashboard/'
+
 
 export default class Login extends Component {
    state = {
@@ -25,9 +27,30 @@ export default class Login extends Component {
     console.warn(err)
   }
 }
+componentWillMount(){
+      this.checkLogin()
+}
+
   componentDidMount(){
     this.requestSMSPermission()
 }
+checkLogin = async () => {
+  try {
+    
+  const value = await AsyncStorage.getItem('@taskapp:userdata');
+  if (value !== null){
+    const data = JSON.parse(value)
+      this.props.onLoginClick(data.id)
+      this.props.navigator.push({
+      name: 'createprofile',
+      passProps:{ id: data.id,
+        phone: data.phoneNumber.number}
+     })
+  }
+} catch (error) {
+    console.log(error)
+}
+  }
 
 
   configureAccountKit() {
@@ -47,8 +70,8 @@ export default class Login extends Component {
             authToken: token,
             loggedAccount: account
           })
-          
-          this.props.onLoginClick(account.id)
+     this.saveLogin(account)
+     this.props.onLoginClick(account.id)
      this.props.navigator.push({
       name: 'createprofile',
       passProps:{ id: account.id,
@@ -58,6 +81,16 @@ export default class Login extends Component {
       }).catch(err => console.log(err))
     }
   }
+
+ saveLogin = async (obj) => {
+    try {
+      await AsyncStorage.setItem('@taskapp:userdata',JSON.stringify(obj));
+    } catch (error) {
+     Alert.alert("Please Try Again")
+     console.log(error)
+    }
+  }
+
 
   onLoginError(e) {
     console.log('Failed to login', e)
@@ -75,15 +108,6 @@ export default class Login extends Component {
       .catch((e) => console.log('Failed to logout'))
   }
 
-  buttonHandle () {
-    this.props.onLoginClick("140699849744149")
-      this.props.navigator.push({
-       name: 'createprofile',
-       passProps:{ id: 140699849744149,
-         phone: 9981017770}
-     })
- 
-   }
   
   render () {
     return ( <View style={styles.container}>
@@ -97,12 +121,11 @@ export default class Login extends Component {
           onLogin={(token) => this.onLogin(token)} onError={(e) => this.onLogin(e)}>
           <Text style={styles.buttonText}>Login via SMS</Text>
         </LoginButton>
-                  <Button onPress={this.buttonHandle.bind(this)} title='Direct Login' />
-
         </View>
             </View>)
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
